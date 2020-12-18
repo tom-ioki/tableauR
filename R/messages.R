@@ -1,6 +1,9 @@
 # Messages
-message_successful_login <-
-  "Login was successful!"
+message_successful_sign_in <-
+  "Sign in was successful!"
+
+message_successful_sign_out <-
+  "Sign out was successful!"
 
 # Error messages
 error_missing_credentials <-

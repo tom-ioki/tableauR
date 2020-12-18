@@ -20,5 +20,6 @@ Imports:
 Suggests: 
     testthat,
     stubthat,
+    mockr,
     lintr,
     covr

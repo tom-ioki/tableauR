@@ -21,7 +21,7 @@ sign_in(token_name, token_secret, server_url, site_url = "", api_version)
 None.
 }
 \description{
-Set the credentials and authenticate for a selected Tableau Server. The sign in function sets a secret access token
+Sets the credentials and authenticate for a selected Tableau Server. The sign in function sets a secret access token
 that can be used for all following API requests. This secret access token is valid for 240 minutes and has to be
 refreshed after this time period.
 }

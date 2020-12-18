@@ -2,6 +2,7 @@
 
 export("%>%")
 export(sign_in)
+export(sign_out)
 import(XML)
 import(httr)
 importFrom(magrittr,"%>%")

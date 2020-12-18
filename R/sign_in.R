@@ -1,6 +1,6 @@
 #' @title Sign In to Tableau Server
 #' @description
-#' Set the credentials and authenticate for a selected Tableau Server. The sign in function sets a secret access token
+#' Sets the credentials and authenticate for a selected Tableau Server. The sign in function sets a secret access token
 #' that can be used for all following API requests. This secret access token is valid for 240 minutes and has to be
 #' refreshed after this time period.
 #' @param token_name The name of the Tableau token
@@ -76,7 +76,7 @@ sign_in <- function(token_name,
     "TABLEAU_SERVER_URL" = server_url
   )
 
-  message(message_successful_login)
+  message(message_successful_sign_in)
 }
 
 create_request_body <- function(personal_access_token_name,
@@ -103,7 +103,8 @@ create_request_body <- function(personal_access_token_name,
   )
 
   request_body <-
-    toString.XMLNode(ts_request)
+    toString.XMLNode(ts_request) %>%
+    gsub(">[[:space:]]+", ">", .)
 
   return(request_body)
 }
