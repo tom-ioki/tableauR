@@ -5,7 +5,7 @@
 \title{Sign Out from Tableau Server}
 \usage{
 sign_out(
-  server_url = Sys.getenv("TABELAU_SERVER_URL"),
+  server_url = Sys.getenv("TABLEAU_SERVER_URL"),
   api_version = Sys.getenv("TABLEAU_API_VERSION"),
   api_token = Sys.getenv("TABLEAU_API_TOKEN")
 )
@@ -15,18 +15,18 @@ sign_out(
 
 \item{api_version}{The Tableau REST API version}
 
-\item{api_token}{The API Access Token that was retrieved when signin in to Tableau Server}
+\item{api_token}{The API Access Token that was retrieved when signing in to Tableau Server}
 }
 \value{
 None.
 }
 \description{
-Unsets the credentials signs out from a selected Tableau Server.
+Unsets the credentials and signs out from a selected Tableau Server.
 }
 \examples{
 \dontrun{
 sign_out(
-  server_url = Sys.getenv("TABELAU_SERVER_URL"),
+  server_url = Sys.getenv("TABLEAU_SERVER_URL"),
   api_version = Sys.getenv("TABLEAU_API_VERSION"),
   api_token = Sys.getenv("TABLEAU_API_TOKEN"))
 }

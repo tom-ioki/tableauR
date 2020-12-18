@@ -103,8 +103,9 @@ create_request_body <- function(personal_access_token_name,
   )
 
   request_body <-
-    toString.XMLNode(ts_request) %>%
-    gsub(">[[:space:]]+", ">", .)
+    toString.XMLNode(ts_request)
+  request_body <-
+    gsub(">[[:space:]]+", ">", request_body)
 
   return(request_body)
 }

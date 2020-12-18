@@ -1,9 +1,10 @@
 Package: tableauR
 Type: Package
-Title: tableauR
+Title: tableauR - Bindings for the Tableau Server REST API
 Version: 0.1.0
-Author: c(
-    person("Tobias Matz", email = "tobias.matz@ioki.com", role = c("aut", "cre")))
+Authors@R: c(
+    person("Tobias Matz", email = "tobias.matz@ioki.com", role = c("aut", "cre"))
+    )
 Maintainer: Tobias Matz <tobias.matz@ioki.com>
 URL: https://github.com/tom-ioki/tableauR
 BugReports: https://github.com/tom-ioki/tableauR/issues

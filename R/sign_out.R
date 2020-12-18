@@ -10,7 +10,7 @@
 #' @examples
 #' \dontrun{
 #' sign_out(
-#'   server_url = Sys.getenv("TABELAU_SERVER_URL"),
+#'   server_url = Sys.getenv("TABLEAU_SERVER_URL"),
 #'   api_version = Sys.getenv("TABLEAU_API_VERSION"),
 #'   api_token = Sys.getenv("TABLEAU_API_TOKEN"))
 #' }
@@ -35,6 +35,9 @@ sign_out <- function(server_url = Sys.getenv("TABLEAU_SERVER_URL"),
 
   response <-
     POST(url = tableau_server_url, add_headers(headers))
+
+  if (response[["status"]] == "error")
+    stop(error_api_response(response))
 
   Sys.unsetenv("TABLEAU_SERVER_URL")
   Sys.unsetenv("TABLEAU_API_VERSION")
