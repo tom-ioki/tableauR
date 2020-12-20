@@ -23,6 +23,14 @@ is_na <- function(parameters) {
   )
 }
 
+is_blank <- function(parameters) {
+  any(
+    unlist(
+      lapply(parameters, function(x) x == "")
+    )
+  )
+}
+
 check_for_api_error <- function(api_response) {
   response <- httr::content(api_response)
 

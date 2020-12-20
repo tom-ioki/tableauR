@@ -65,6 +65,19 @@ describe("Validation of function parameters", {
       })
     })
   })
+
+  describe("when User has already signed out", {
+    Sys.unsetenv("TABLEAU_API_VERSION")
+    Sys.unsetenv("TABLEAU_SERVER_URL")
+    Sys.unsetenv("TABLEAU_API_TOKEN")
+
+    it("returns an error", {
+      expect_error(
+        sign_out(),
+        "Already signed out!"
+      )
+    })
+  })
 })
 
 describe("#sign_out", {

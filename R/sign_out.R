@@ -27,6 +27,9 @@ sign_out <- function(server_url = Sys.getenv("TABLEAU_SERVER_URL"),
   if (is_null(parameters) || is_na(parameters))
     stop(error_missing_credentials)
 
+  if (is_blank(parameters))
+    stop(error_already_signed_out)
+
   endpoint <- "/auth/signout"
   headers <- c('X-tableau-auth' = api_token)
 

@@ -15,7 +15,7 @@ describe("#is_url", {
   })
 })
 
-describe('#is_null', {
+describe("#is_null", {
   parameters <-
     list(a = 1, b = 2)
   parameters_with_null <-
@@ -31,7 +31,7 @@ describe('#is_null', {
   })
 })
 
-describe('#is_na', {
+describe("#is_na", {
   parameters <-
     list(a = 1, b = 2)
   parameters_with_na <-
@@ -43,6 +43,22 @@ describe('#is_na', {
 
     expect_true(
       is_na(parameters_with_na)
+    )
+  })
+})
+
+describe("is_blank", {
+  parameters<-
+    list(a = 1, b = 2)
+  parameters_with_blank <-
+    list(a = "", b = 2)
+  it("detects blank parameters", {
+    expect_false(
+      is_blank(parameters)
+    )
+
+    expect_true(
+      is_blank(parameters_with_blank)
     )
   })
 })
