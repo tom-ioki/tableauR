@@ -171,7 +171,7 @@ describe("#sign_in", {
   example_body <-
     gsub(">[[:space:]]+", ">", request_body)
 
-  describe("when the sign_in was successful", {
+  describe("when the sign in was successful", {
     Sys.unsetenv("TABLEAU_API_VERSION")
     Sys.unsetenv("TABLEAU_SERVER_URL")
     Sys.unsetenv("TABLEAU_API_TOKEN")
@@ -190,7 +190,7 @@ describe("#sign_in", {
     check_for_api_error_stub <- stubthat::stub(check_for_api_error)
     check_for_api_error_stub$withArgs(api_response = response)$returns(response)
 
-    sign_in_tester <- function(name, secret, url, version) {
+    sign_in_double <- function(name, secret, url, version) {
       mockr::with_mock(get_access_token = get_access_token_stub$f,
                        check_for_api_error = check_for_api_error_stub$f,
                        sign_in(token_name = name, token_secret = secret, server_url = url, api_version = version))
@@ -198,12 +198,12 @@ describe("#sign_in", {
 
     it("returns a confirmation message", {
       expect_message(
-        sign_in_tester(name = name, secret = secret, url = url, version = version),
+        sign_in_double(name = name, secret = secret, url = url, version = version),
         "Sign in was successful!"
       )
     })
 
-    it("will add the environment variables", {
+    it("sets the environment variables", {
       expect_equal(
         Sys.getenv("TABLEAU_API_TOKEN"),
         "FOOBAR"
@@ -237,7 +237,7 @@ describe("#sign_in", {
     get_access_token_stub <- stubthat::stub(get_access_token)
     get_access_token_stub$withArgs(tableau_server_url = example_url, request_body = example_body)$returns(response)
 
-    sign_in_tester <- function(name, secret, url, version) {
+    sign_in_double <- function(name, secret, url, version) {
       mockr::with_mock(get_access_token = get_access_token_stub$f,
                        check_for_api_error = check_for_api_error_stub$f,
                        sign_in(token_name = name, token_secret = secret, server_url = url, api_version = version))
@@ -245,11 +245,11 @@ describe("#sign_in", {
 
     it("returns an error message", {
       expect_error(
-        sign_in_tester(name = name, secret = secret, url = url, version = version)
+        sign_in_double(name = name, secret = secret, url = url, version = version)
       )
     })
 
-    it("will not add the environment variables", {
+    it("does not set the environment variables", {
       expect_equal(
         Sys.getenv("TABLEAU_API_TOKEN"),
         ""
