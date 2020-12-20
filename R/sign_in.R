@@ -58,7 +58,7 @@ sign_in <- function(token_name,
     )
 
   response <-
-    POST(url = tableau_server_url, body = request_body) %>%
+    get_access_token(tableau_server_url = tableau_server_url, request_body = request_body) %>%
     check_for_api_error()
 
   if (response[["status"]] == "error")
@@ -108,4 +108,8 @@ create_request_body <- function(personal_access_token_name,
     gsub(">[[:space:]]+", ">", request_body)
 
   return(request_body)
+}
+
+get_access_token <- function(tableau_server_url, request_body) {
+  POST(url = tableau_server_url, body = request_body)
 }
