@@ -26,7 +26,7 @@ is_na <- function(parameters) {
 check_for_api_error <- function(api_response) {
   response <- httr::content(api_response)
 
-  if (is.null(response$error)) {
+  if (api_response$status_code == 200) {
     response <-
       list(
         status = "success",
