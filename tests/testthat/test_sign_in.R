@@ -153,6 +153,119 @@ describe("Validation of function parameters", {
   })
 })
 
+describe("#sign_in", {
+  name <- "My token"
+  secret <- "ABCDEF"
+  url <- "https://www.my-tableau-server.com"
+  version <- 3.9
+
+  example_url <-
+    "https://www.my-tableau-server.com/api/3.9/auth/signin"
+
+  request_body <-
+    "<tsRequest>
+    <credentials personalAccessTokenName=\"My token\" personalAccessTokenSecret=\"ABCDEF\">
+      <site contentUrl=\"\"/>
+    </credentials>
+  </tsRequest>"
+  example_body <-
+    gsub(">[[:space:]]+", ">", request_body)
+
+  describe("when the sign in was successful", {
+    Sys.unsetenv("TABLEAU_API_VERSION")
+    Sys.unsetenv("TABLEAU_SERVER_URL")
+    Sys.unsetenv("TABLEAU_API_TOKEN")
+
+    response <- list(
+      status = "success",
+      response = list(
+        credentials = list(
+          token = "FOOBAR"
+        )
+      )
+    )
+
+    get_access_token_stub <- stubthat::stub(get_access_token)
+    get_access_token_stub$withArgs(tableau_server_url = example_url, request_body = example_body)$returns(response)
+    check_for_api_error_stub <- stubthat::stub(check_for_api_error)
+    check_for_api_error_stub$withArgs(api_response = response)$returns(response)
+
+    sign_in_double <- function(name, secret, url, version) {
+      mockr::with_mock(get_access_token = get_access_token_stub$f,
+                       check_for_api_error = check_for_api_error_stub$f,
+                       sign_in(token_name = name, token_secret = secret, server_url = url, api_version = version))
+    }
+
+    it("returns a confirmation message", {
+      expect_message(
+        sign_in_double(name = name, secret = secret, url = url, version = version),
+        "Sign in was successful!"
+      )
+    })
+
+    it("sets the environment variables", {
+      expect_equal(
+        Sys.getenv("TABLEAU_API_TOKEN"),
+        "FOOBAR"
+      )
+      expect_equal(
+        Sys.getenv("TABLEAU_SERVER_URL"),
+        "https://www.my-tableau-server.com"
+      )
+      expect_equal(
+        Sys.getenv("TABLEAU_API_VERSION"),
+        "3.9"
+      )
+    })
+  })
+
+  describe("when the sign in failed", {
+    Sys.unsetenv("TABLEAU_API_VERSION")
+    Sys.unsetenv("TABLEAU_SERVER_URL")
+    Sys.unsetenv("TABLEAU_API_TOKEN")
+
+    response <-
+      list(
+        status = "error",
+        error_code = "401001",
+        error_summary = "Signin Error",
+        error_detail = "An error occurred"
+      )
+
+    check_for_api_error_stub <- stubthat::stub(check_for_api_error)
+    check_for_api_error_stub$withArgs(api_response = response)$returns(response)
+    get_access_token_stub <- stubthat::stub(get_access_token)
+    get_access_token_stub$withArgs(tableau_server_url = example_url, request_body = example_body)$returns(response)
+
+    sign_in_double <- function(name, secret, url, version) {
+      mockr::with_mock(get_access_token = get_access_token_stub$f,
+                       check_for_api_error = check_for_api_error_stub$f,
+                       sign_in(token_name = name, token_secret = secret, server_url = url, api_version = version))
+    }
+
+    it("returns an error message", {
+      expect_error(
+        sign_in_double(name = name, secret = secret, url = url, version = version)
+      )
+    })
+
+    it("does not set the environment variables", {
+      expect_equal(
+        Sys.getenv("TABLEAU_API_TOKEN"),
+        ""
+      )
+      expect_equal(
+        Sys.getenv("TABLEAU_SERVER_URL"),
+        ""
+      )
+      expect_equal(
+        Sys.getenv("TABLEAU_API_VERSION"),
+        ""
+      )
+    })
+  })
+})
+
 describe("#create_request_body", {
   pat_name <- "test_token"
   pat_secret <- "FOOBAR"

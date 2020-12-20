@@ -23,10 +23,18 @@ is_na <- function(parameters) {
   )
 }
 
+is_blank <- function(parameters) {
+  any(
+    unlist(
+      lapply(parameters, function(x) x == "")
+    )
+  )
+}
+
 check_for_api_error <- function(api_response) {
   response <- httr::content(api_response)
 
-  if (is.null(response$error)) {
+  if (api_response$status_code %in% 200:204) {
     response <-
       list(
         status = "success",

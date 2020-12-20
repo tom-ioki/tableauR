@@ -37,6 +37,15 @@ describe("Test messages", {
     })
   })
 
+  describe("User has already signed out", {
+    it("returns the correct error message", {
+      expect_equal(
+        error_already_signed_out,
+        "Already signed out!"
+      )
+    })
+  })
+
   describe("API Error", {
     response <-
       list(

@@ -27,6 +27,9 @@ sign_out <- function(server_url = Sys.getenv("TABLEAU_SERVER_URL"),
   if (is_null(parameters) || is_na(parameters))
     stop(error_missing_credentials)
 
+  if (is_blank(parameters))
+    stop(error_already_signed_out)
+
   endpoint <- "/auth/signout"
   headers <- c('X-tableau-auth' = api_token)
 
@@ -34,7 +37,8 @@ sign_out <- function(server_url = Sys.getenv("TABLEAU_SERVER_URL"),
     paste0(server_url, "/api/", api_version, endpoint)
 
   response <-
-    POST(url = tableau_server_url, add_headers(headers))
+    post_sign_out(tableau_server_url = tableau_server_url, headers = headers) %>%
+    check_for_api_error()
 
   if (response[["status"]] == "error")
     stop(error_api_response(response))
@@ -44,4 +48,8 @@ sign_out <- function(server_url = Sys.getenv("TABLEAU_SERVER_URL"),
   Sys.unsetenv("TABLEAU_API_TOKEN")
 
   message(message_successful_sign_out)
+}
+
+post_sign_out <- function(tableau_server_url, headers) {
+  POST(url = tableau_server_url, add_headers(headers))
 }
