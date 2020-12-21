@@ -266,7 +266,7 @@ describe("#sign_in", {
   })
 })
 
-describe("#create_request_body", {
+describe("#create_sign_in_request_body", {
   pat_name <- "test_token"
   pat_secret <- "FOOBAR"
   sign_in_to_site <- "marketing"
@@ -282,7 +282,7 @@ describe("#create_request_body", {
 
   it("returns the correct request body", {
     expect_equal(
-      create_request_body(
+      create_sign_in_request_body(
         personal_access_token_name = pat_name,
         personal_access_token_secret = pat_secret,
         sign_in_to_site = sign_in_to_site

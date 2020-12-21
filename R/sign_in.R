@@ -42,7 +42,7 @@ sign_in <- function(token_name,
   is_url(server_url)
 
   request_body <-
-    create_request_body(
+    create_sign_in_request_body(
       personal_access_token_name = token_name,
       personal_access_token_secret = token_secret,
       sign_in_to_site = site_url
@@ -79,9 +79,9 @@ sign_in <- function(token_name,
   message(message_successful_sign_in)
 }
 
-create_request_body <- function(personal_access_token_name,
-                                personal_access_token_secret,
-                                sign_in_to_site) {
+create_sign_in_request_body <- function(personal_access_token_name,
+                                        personal_access_token_secret,
+                                        sign_in_to_site) {
   attributes <-
     c(
       personalAccessTokenName = personal_access_token_name,
