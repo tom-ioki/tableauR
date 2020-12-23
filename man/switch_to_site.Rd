@@ -25,6 +25,8 @@ None.
 }
 \description{
 Can be used to switch between sites on Tableau Server. This method is currently not available for Tableau Online.
+The content URL is not the site name. The content URL is the value that in the server environment is referred to as
+the site ID.
 }
 \examples{
 \dontrun{
