@@ -1,6 +1,6 @@
 context("Messages")
 
-describe("Test messages", {
+describe("Messages", {
   describe("Sign in", {
     it("returns the correct message", {
       expect_equal(
@@ -19,11 +19,31 @@ describe("Test messages", {
     })
   })
 
+  describe("Switch to site", {
+    it("returns the correct message", {
+      expect_equal(
+        message_successful_switched_to_site,
+        "Successfully switched to site:"
+      )
+    })
+  })
+})
+
+describe("Error messages", {
   describe("'Missing credentials", {
     it("returns the correct error message", {
       expect_equal(
         error_missing_credentials,
         "Missing authorization credentials: Make sure to provide all required credentials!"
+      )
+    })
+  })
+
+  describe("'Missing parameters", {
+    it("returns the correct error message", {
+      expect_equal(
+        error_missing_parameters,
+        "Missing parameters: Make sure to provide all required parameters!"
       )
     })
   })
@@ -37,7 +57,16 @@ describe("Test messages", {
     })
   })
 
-  describe("User has already signed out", {
+  describe("Not signed in", {
+    it("returns the correct error message", {
+      expect_equal(
+        error_not_signed_in,
+        "Not signed in to Tableau Server!"
+      )
+    })
+  })
+
+  describe("User already signed out", {
     it("returns the correct error message", {
       expect_equal(
         error_already_signed_out,
@@ -45,8 +74,10 @@ describe("Test messages", {
       )
     })
   })
+})
 
-  describe("API Error", {
+describe("API errors", {
+  describe("API error message", {
     response <-
       list(
         status = "error",
