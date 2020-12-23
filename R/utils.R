@@ -9,3 +9,7 @@ compose_server_url <- function(url, version, end_point) {
 
   return(url)
 }
+
+trim_xml <- function(xml) {
+  gsub(">[[:space:]]+", ">", xml)
+}

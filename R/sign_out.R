@@ -34,7 +34,11 @@ sign_out <- function(server_url = Sys.getenv("TABLEAU_SERVER_URL"),
   headers <- c('X-tableau-auth' = api_token)
 
   tableau_server_url <-
-    paste0(server_url, "/api/", api_version, endpoint)
+    compose_server_url(
+      url = server_url,
+      version = api_version,
+      end_point = endpoint
+    )
 
   response <-
     post_sign_out(tableau_server_url = tableau_server_url, headers = headers) %>%

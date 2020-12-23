@@ -10,134 +10,73 @@ describe("Validation of function parameters", {
     "Missing authorization credentials: Make sure to provide all required credentials!"
 
   describe("when one of the function parameters is missing", {
-    describe("token_name", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_secret = secret, server_url = url, api_version = version),
-          "argument \"token_name\" is missing, with no default"
-        )
-      })
-    })
-
-    describe("token_secret", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, server_url = url, api_version = version),
-          "argument \"token_secret\" is missing, with no default"
-        )
-      })
-    })
-
-    describe("server_url", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, api_version = version),
-          "argument \"server_url\" is missing, with no default"
-        )
-      })
-    })
-
-    describe("api_version", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, server_url = url),
-          "argument \"api_version\" is missing, with no default"
-        )
-      })
+    it("returns an error", {
+      expect_error(
+        sign_in(token_secret = secret, server_url = url, api_version = version),
+        "argument \"token_name\" is missing, with no default"
+      )
+      expect_error(
+        sign_in(token_name = name, server_url = url, api_version = version),
+        "argument \"token_secret\" is missing, with no default"
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, api_version = version),
+        "argument \"server_url\" is missing, with no default"
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, server_url = url),
+        "argument \"api_version\" is missing, with no default"
+      )
     })
   })
 
   describe("when one of the function parameters is NULL", {
-    describe("token_name", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = NULL, token_secret = secret, server_url = url, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("token_secret", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = NULL, server_url = url, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("server_url", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, server_url = NULL, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("site_url", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, server_url = url, site_url = NULL, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("api_version", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, server_url = url, api_version = NULL),
-          expected_error_message
-        )
-      })
+    it("returns an error", {
+      expect_error(
+        sign_in(token_name = NULL, token_secret = secret, server_url = url, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = NULL, server_url = url, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, server_url = NULL, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, server_url = url, site_url = NULL, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, server_url = url, api_version = NULL),
+        expected_error_message
+      )
     })
   })
 
   describe("when one of the function parameters is NA", {
-    describe("token_name", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = NA, token_secret = secret, server_url = url, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("token_secret", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = NA, server_url = url, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("server_url", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, server_url = NA, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("site_url", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, server_url = url, site_url = NA, api_version = version),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("api_version", {
-      it("returns an error", {
-        expect_error(
-          sign_in(token_name = name, token_secret = secret, server_url = url, api_version = NA),
-          expected_error_message
-        )
-      })
+    it("returns an error", {
+      expect_error(
+        sign_in(token_name = NA, token_secret = secret, server_url = url, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = NA, server_url = url, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, server_url = NA, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, server_url = url, site_url = NA, api_version = version),
+        expected_error_message
+      )
+      expect_error(
+        sign_in(token_name = name, token_secret = secret, server_url = url, api_version = NA),
+        expected_error_message
+      )
     })
   })
 
@@ -169,7 +108,7 @@ describe("#sign_in", {
     </credentials>
   </tsRequest>"
   example_body <-
-    gsub(">[[:space:]]+", ">", request_body)
+    trim_xml(request_body)
 
   describe("when the sign in was successful", {
     Sys.unsetenv("TABLEAU_API_VERSION")
@@ -186,7 +125,11 @@ describe("#sign_in", {
     )
 
     get_access_token_stub <- stubthat::stub(get_access_token)
-    get_access_token_stub$withArgs(tableau_server_url = example_url, request_body = example_body)$returns(response)
+    get_access_token_stub$withArgs(
+      tableau_server_url = example_url,
+      request_body = example_body
+    )$returns(response)
+
     check_for_api_error_stub <- stubthat::stub(check_for_api_error)
     check_for_api_error_stub$withArgs(api_response = response)$returns(response)
 
@@ -232,10 +175,14 @@ describe("#sign_in", {
         error_detail = "An error occurred"
       )
 
+    get_access_token_stub <- stubthat::stub(get_access_token)
+    get_access_token_stub$withArgs(
+      tableau_server_url = example_url,
+      request_body = example_body
+    )$returns(response)
+
     check_for_api_error_stub <- stubthat::stub(check_for_api_error)
     check_for_api_error_stub$withArgs(api_response = response)$returns(response)
-    get_access_token_stub <- stubthat::stub(get_access_token)
-    get_access_token_stub$withArgs(tableau_server_url = example_url, request_body = example_body)$returns(response)
 
     sign_in_double <- function(name, secret, url, version) {
       mockr::with_mock(get_access_token = get_access_token_stub$f,
@@ -278,7 +225,7 @@ describe("#create_sign_in_request_body", {
       </credentials>
     </tsRequest>"
   expected_request_body <-
-    gsub(">[[:space:]]+", ">", expected_request_body)
+    trim_xml(expected_request_body)
 
   it("returns the correct request body", {
     expect_equal(

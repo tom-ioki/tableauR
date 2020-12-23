@@ -3,6 +3,7 @@
 export("%>%")
 export(sign_in)
 export(sign_out)
+export(switch_to_site)
 import(XML)
 import(httr)
 importFrom(magrittr,"%>%")

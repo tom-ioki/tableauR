@@ -28,3 +28,21 @@ describe("#compose_server_url", {
     })
   })
 })
+
+describe("#trim_xml", {
+  raw_xml <-
+    "<tsRequest>
+      <site contentUrl=\"marketing\"/>
+      <random foo=\"bar\"/>
+    </tsRequest>"
+
+  formatted_xml <-
+    "<tsRequest><site contentUrl=\"marketing\"/><random foo=\"bar\"/></tsRequest>"
+
+  it("returns the correctly formatted xml", {
+    expect_equal(
+      trim_xml(raw_xml),
+      formatted_xml
+    )
+  })
+})

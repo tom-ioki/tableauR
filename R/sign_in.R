@@ -64,8 +64,11 @@ sign_in <- function(token_name,
   if (response[["status"]] == "error")
     stop(error_api_response(response))
 
+  api_token <-
+    response$response$credentials$token
+
   Sys.setenv(
-    "TABLEAU_API_TOKEN" = response[["response"]]$credentials$token
+    "TABLEAU_API_TOKEN" = api_token
   )
 
   Sys.setenv(
@@ -105,7 +108,7 @@ create_sign_in_request_body <- function(personal_access_token_name,
   request_body <-
     toString.XMLNode(ts_request)
   request_body <-
-    gsub(">[[:space:]]+", ">", request_body)
+    trim_xml(request_body)
 
   return(request_body)
 }
