@@ -47,7 +47,7 @@ describe("#is_na", {
   })
 })
 
-describe("is_blank", {
+describe("#is_blank", {
   parameters<-
     list(a = 1, b = 2)
   parameters_with_blank <-
