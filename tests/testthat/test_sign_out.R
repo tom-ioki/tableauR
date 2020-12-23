@@ -9,60 +9,36 @@ describe("Validation of function parameters", {
     "Missing authorization credentials: Make sure to provide all required credentials!"
 
   describe("when one of the function parameters is NULL", {
-    describe("server_url", {
-      it("returns an error", {
-        expect_error(
-          sign_out(server_url = NULL, api_version = version, api_token = token),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("api_version", {
-      it("returns an error", {
-        expect_error(
-          sign_out(server_url = url, api_version = NULL, api_token = token),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("api_token", {
-      it("returns an error", {
-        expect_error(
-          sign_out(server_url = url, api_version = version, api_token = NULL),
-          expected_error_message
-        )
-      })
+    it("returns an error", {
+      expect_error(
+        sign_out(server_url = NULL, api_version = version, api_token = token),
+        expected_error_message
+      )
+      expect_error(
+        sign_out(server_url = url, api_version = NULL, api_token = token),
+        expected_error_message
+      )
+      expect_error(
+        sign_out(server_url = url, api_version = version, api_token = NULL),
+        expected_error_message
+      )
     })
   })
 
   describe("when one of the function parameters is NA", {
-    describe("server_url", {
-      it("returns an error", {
-        expect_error(
-          sign_out(server_url = NA, api_version = version, api_token = token),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("api_version", {
-      it("returns an error", {
-        expect_error(
-          sign_out(server_url = url, api_version = NA, api_token = token),
-          expected_error_message
-        )
-      })
-    })
-
-    describe("api_token", {
-      it("returns an error", {
-        expect_error(
-          sign_out(server_url = url, api_version = version, api_token = NA),
-          expected_error_message
-        )
-      })
+    it("returns an error", {
+      expect_error(
+        sign_out(server_url = NA, api_version = version, api_token = token),
+        expected_error_message
+      )
+      expect_error(
+        sign_out(server_url = url, api_version = NA, api_token = token),
+        expected_error_message
+      )
+      expect_error(
+        sign_out(server_url = url, api_version = version, api_token = NA),
+        expected_error_message
+      )
     })
   })
 
@@ -103,7 +79,11 @@ describe("#sign_out", {
       )
 
     post_sign_out_stub <- stubthat::stub(post_sign_out)
-    post_sign_out_stub$withArgs(tableau_server_url = example_url, headers = example_headers)$returns(response)
+    post_sign_out_stub$withArgs(
+      tableau_server_url = example_url,
+      headers = example_headers
+    )$returns(response)
+
     check_for_api_error_stub <- stubthat::stub(check_for_api_error)
     check_for_api_error_stub$withArgs(api_response = response)$returns(response)
 
@@ -150,7 +130,11 @@ describe("#sign_out", {
       )
 
     post_sign_out_stub <- stubthat::stub(post_sign_out)
-    post_sign_out_stub$withArgs(tableau_server_url = example_url, headers = example_headers)$returns(response)
+    post_sign_out_stub$withArgs(
+      tableau_server_url = example_url,
+      headers = example_headers
+    )$returns(response)
+
     check_for_api_error_stub <- stubthat::stub(check_for_api_error)
     check_for_api_error_stub$withArgs(api_response = response)$returns(response)
 
@@ -166,7 +150,7 @@ describe("#sign_out", {
       )
     })
 
-    it("does not unset the environment varialbes", {
+    it("does not unset the environment variables", {
       expect_equal(
         Sys.getenv("TABLEAU_API_TOKEN"),
         token
